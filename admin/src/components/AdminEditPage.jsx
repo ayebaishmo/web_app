@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import {
+  TextField,
+  Button,
+  Typography,
+  Box,
+  Paper
+} from '@mui/material';
 
 const AdminEditPage = () => {
   const [searchId, setSearchId] = useState('');
@@ -34,34 +41,39 @@ const AdminEditPage = () => {
   };
 
   return (
-    <div>
-      <h2>Search and Edit Administrator</h2>
+    <Box mt={4} maxWidth={600} mx="auto">
+      <Typography variant="h5" gutterBottom>Search and Edit Administrator</Typography>
 
-      {/* Search Input */}
-      <div>
-        <input
+      <Box display="flex" alignItems="center" gap={2} mb={2}>
+        <TextField
           type="number"
-          placeholder="Enter Admin ID"
+          label="Enter Admin ID"
           value={searchId}
           onChange={(e) => setSearchId(e.target.value)}
+          size="small"
         />
-        <button onClick={fetchAdmin}>Search</button>
-      </div>
+        <Button variant="contained" onClick={fetchAdmin}>Search</Button>
+      </Box>
 
-      {message && <p>{message}</p>}
-
-      {/* Editable Form */}
-      {admin && (
-        <form onSubmit={handleUpdate}>
-          <input name="FirstName" value={admin.FirstName} onChange={handleChange} required />
-          <input name="LastName" value={admin.LastName} onChange={handleChange} required />
-          <input name="Email" value={admin.Email} onChange={handleChange} type="email" required />
-          <input name="Password" value={admin.Password} onChange={handleChange} type="password" required />
-          <input name="PhoneNumber" value={admin.PhoneNumber} onChange={handleChange} required />
-          <button type="submit">Update Admin</button>
-        </form>
+      {message && (
+        <Typography color={message.includes('successfully') ? 'green' : 'error'} mb={2}>
+          {message}
+        </Typography>
       )}
-    </div>
+
+      {admin && (
+        <Paper elevation={3} sx={{ p: 3 }}>
+          <Box component="form" onSubmit={handleUpdate} display="flex" flexDirection="column" gap={2}>
+            <TextField name="FirstName" label="First Name" value={admin.FirstName} onChange={handleChange} required />
+            <TextField name="LastName" label="Last Name" value={admin.LastName} onChange={handleChange} required />
+            <TextField name="Email" label="Email" type="email" value={admin.Email} onChange={handleChange} required />
+            <TextField name="Password" label="Password" type="password" value={admin.Password} onChange={handleChange} required />
+            <TextField name="PhoneNumber" label="Phone Number" value={admin.PhoneNumber} onChange={handleChange} required />
+            <Button type="submit" variant="contained">Update Admin</Button>
+          </Box>
+        </Paper>
+      )}
+    </Box>
   );
 };
 

@@ -1,5 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import {
+  Typography,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  TableContainer,
+  Paper,
+  CircularProgress,
+  Box
+} from '@mui/material';
 
 const AdminListPage = () => {
   const [admins, setAdmins] = useState([]);
@@ -17,34 +29,42 @@ const AdminListPage = () => {
       });
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" mt={4}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
-    <div>
-      <h2>Registered Administrators</h2>
-      <table border="1" cellPadding="8">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Registered At</th>
-          </tr>
-        </thead>
-        <tbody>
-          {admins.map(admin => (
-            <tr key={admin.AdministratorID}>
-              <td>{admin.AdministratorID}</td>
-              <td>{admin.FirstName} {admin.LastName}</td>
-              <td>{admin.Email}</td>
-              <td>{admin.PhoneNumber}</td>
-              <td>{new Date(admin.RegistrationDate).toLocaleString()}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <Box mt={4}>
+      <Typography variant="h5" gutterBottom>Registered Administrators</Typography>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>ID</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Phone</TableCell>
+              <TableCell>Registered At</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {admins.map(admin => (
+              <TableRow key={admin.AdministratorID}>
+                <TableCell>{admin.AdministratorID}</TableCell>
+                <TableCell>{admin.FirstName} {admin.LastName}</TableCell>
+                <TableCell>{admin.Email}</TableCell>
+                <TableCell>{admin.PhoneNumber}</TableCell>
+                <TableCell>{new Date(admin.RegistrationDate).toLocaleString()}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 };
 

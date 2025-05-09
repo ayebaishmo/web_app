@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import {
+  Box,
+  Button,
+  Paper,
+  TextField,
+  Typography,
+  Divider,
+} from '@mui/material';
 
 const AdminDeletePage = () => {
   const [searchId, setSearchId] = useState('');
@@ -33,33 +41,51 @@ const AdminDeletePage = () => {
   };
 
   return (
-    <div>
-      <h2>Search and Delete Administrator</h2>
+    <Box sx={{ maxWidth: 600, mx: 'auto', mt: 4, px: 2 }}>
+      <Typography variant="h4" gutterBottom>
+        Search and Delete Administrator
+      </Typography>
 
-      <div>
-        <input
-          type="number"
-          placeholder="Enter Admin ID"
-          value={searchId}
-          onChange={(e) => setSearchId(e.target.value)}
-        />
-        <button onClick={fetchAdmin}>Search</button>
-      </div>
-
-      {message && <p>{message}</p>}
+      <Paper sx={{ p: 3, mb: 3 }}>
+        <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+          <TextField
+            fullWidth
+            label="Enter Admin ID"
+            type="number"
+            value={searchId}
+            onChange={(e) => setSearchId(e.target.value)}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={fetchAdmin}
+          >
+            Search
+          </Button>
+        </Box>
+        {message && <Typography color="secondary">{message}</Typography>}
+      </Paper>
 
       {admin && (
-        <div>
-          <h3>Admin Info:</h3>
-          <p><strong>Name:</strong> {admin.FirstName} {admin.LastName}</p>
-          <p><strong>Email:</strong> {admin.Email}</p>
-          <p><strong>Phone:</strong> {admin.PhoneNumber}</p>
-          <button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleDelete}>
-            Delete Admin
-          </button>
-        </div>
+        <Paper sx={{ p: 3 }}>
+          <Typography variant="h6">Admin Info:</Typography>
+          <Divider sx={{ my: 1 }} />
+          <Typography><strong>Name:</strong> {admin.FirstName} {admin.LastName}</Typography>
+          <Typography><strong>Email:</strong> {admin.Email}</Typography>
+          <Typography><strong>Phone:</strong> {admin.PhoneNumber}</Typography>
+
+          <Box sx={{ mt: 2 }}>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={handleDelete}
+            >
+              Delete Admin
+            </Button>
+          </Box>
+        </Paper>
       )}
-    </div>
+    </Box>
   );
 };
 
