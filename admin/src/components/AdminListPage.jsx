@@ -1,17 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {
-  Typography,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
-  TableContainer,
-  Paper,
-  CircularProgress,
-  Box
-} from '@mui/material';
+import { Typography, Table, TableHead, TableBody, TableRow, TableCell, TableContainer, Paper, CircularProgress, Box } from '@mui/material';
 
 const AdminListPage = () => {
   const [admins, setAdmins] = useState([]);
